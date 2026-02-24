@@ -136,7 +136,3 @@ Use Task Scheduler or NSSM to run the script at startup. See `windows/install-se
 ## Output
 
 Images are saved to each camera's `output_path` using its `filename_pattern`. Default pattern `{date}_{time}.jpg` produces files like `2025-02-23_08-30-00.jpg`.
-
-## License
-
-MIT
