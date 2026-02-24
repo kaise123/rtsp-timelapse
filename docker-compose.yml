@@ -1,0 +1,29 @@
+services:
+  timelapse:
+    build: .
+    container_name: rtsp-timelapse
+    restart: unless-stopped
+    environment:
+      # Single camera: use RTSP_URL + OUTPUT_PATH
+      # RTSP_URL: rtsp://user:password@192.168.1.100:554/stream
+      # OUTPUT_PATH: /data/timelapse
+
+      # Multiple cameras: use CAMERAS (YAML list)
+      CAMERAS: |
+        - rtsp_url: rtsp://user:password@192.168.1.100:554/front
+          output_path: /data/front
+        - rtsp_url: rtsp://user:password@192.168.1.101:554/back
+          output_path: /data/back
+
+      FILENAME_PATTERN: "{date}_{time}.jpg"
+      SCHEDULE_MODE: dynamic
+      SCHEDULE_TIMES: sunrise+30m,noon,sunset-1h
+      LATITUDE: 51.5074
+      LONGITUDE: -0.1278
+      LOCATION_TIMEZONE: Europe/London
+    volumes:
+      - timelapse-data:/data
+    # network_mode: host
+
+volumes:
+  timelapse-data:

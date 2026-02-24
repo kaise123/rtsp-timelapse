@@ -1,0 +1,18 @@
+[Unit]
+Description=RTSP Timelapse - Capture frames from camera at scheduled times
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Edit these paths to match your installation
+WorkingDirectory=/path/to/TimeLapse
+ExecStart=/usr/bin/python3 /path/to/TimeLapse/timelapse.py --config /path/to/TimeLapse/config.yaml
+Restart=on-failure
+RestartSec=60
+# Run as unprivileged user (optional, adjust as needed)
+# User=timelapse
+# Group=timelapse
+
+[Install]
+WantedBy=multi-user.target

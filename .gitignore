@@ -1,0 +1,7 @@
+config.yaml
+timelapse/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env

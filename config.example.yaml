@@ -1,0 +1,47 @@
+# RTSP Timelapse Configuration
+# Copy this file to config.yaml and adjust for your setup.
+
+# --- Single camera (legacy) ---
+# rtsp_url: "rtsp://user:password@192.168.1.100:554/stream"
+# output_path: "./timelapse"
+
+# --- Multiple cameras (each saves to its own folder) ---
+cameras:
+  - rtsp_url: "rtsp://user:password@192.168.1.100:554/front"
+    output_path: "./timelapse/front"
+  - rtsp_url: "rtsp://user:password@192.168.1.101:554/back"
+    output_path: "./timelapse/back"
+    filename_pattern: "{date}_{time}.jpg"  # optional per-camera override
+
+# Default filename pattern. Placeholders: {date}, {time}, {datetime}
+filename_pattern: "{date}_{time}.jpg"
+
+# Timezone for fixed mode (when location is not set). IANA timezone name.
+timezone: "UTC"
+
+# Schedule configuration - choose ONE mode
+schedule:
+  # Mode: "fixed" | "dynamic" | "evenly_spaced"
+
+  # --- FIXED MODE: Explicit times (24h format) ---
+  # mode: "fixed"
+  # times: ["08:00", "12:00", "18:00"]
+
+  # --- DYNAMIC MODE: Sunrise/sunset with offsets ---
+  mode: "dynamic"
+  times: ["sunrise+30m", "noon", "sunset-1h"]
+  # Events: dawn, sunrise, noon, sunset, dusk
+  # Offsets: +30m, -1h, +90m (minutes or hours)
+
+  # --- EVENLY SPACED MODE: N images between sunrise and sunset ---
+  # mode: "evenly_spaced"
+  # images_per_day: 5
+  # sunrise_offset: "+30m"   # Start 30 min after sunrise
+  # sunset_offset: "-1h"    # End 1 hour before sunset
+
+# Location (required for dynamic and evenly_spaced modes)
+# Used for sunrise/sunset calculations
+location:
+  latitude: 51.5074
+  longitude: -0.1278
+  timezone: "Europe/London"
